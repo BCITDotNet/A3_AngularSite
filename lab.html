@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html data-ng-app="categoryViewer">
+    <head>
+        <title>Categories</title>
+        
+        <!-- <link href="Content/themes/swanky-purse/jquery-ui.min.css" rel="stylesheet" /> /-->
+        <!-- <link href="Content/themes/blitzer/jquery-ui.min.css" rel="stylesheet" />-->
+        <link href="Content/themes/le-frog/jquery-ui.min.css" rel="stylesheet"  />
+        <!-- link href="Content/themes/Sunny/jquery-ui.min.css" rel="stylesheet" /-->
+        
+        <script src="Scripts/jquery-2.1.3.min.js"></script>
+        <script src="Scripts/jquery-ui-1.11.3.min.js"></script>
+        <script data-require="angular.js@*" data-semver="1.3.0-beta.5"
+            src="https://code.angularjs.org/1.3.0-beta.5/angular.js"></script>
+        <script src="script.js"></script>
+        <script>
+            $(function () {
+              $("#tabs").tabs();
+              });
+              </script>
+        
+    </head>
+    <body data-ng-controller="MainController">
+        <section>
+            <div id="tabs">
+                <ul>
+                    <li><a href="#show_all">Show All</a></li>
+                    <li><a href="#find">Find</a></li>
+                    <li><a href="#add">Add</a></li>
+                    <li><a href="#edit">Edit</a></li>
+                    <li><a href="#delete">Delete</a></li>
+                </ul>
+                <div id="show_all">
+                    <form name="frmGetCategories" data-ng-submit="getCategories()">
+                        <input type="submit" value="Get Categories" />
+                    </form>
+                    <table class='ui-state-highlight'  data-ng-show="categories">
+                        <tr>
+                            <th>Id</th>
+                            <th>CategoryName</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <tr data-ng-repeat="category in categories">
+                                <td>{{ category.CategoryID }}</td>
+                                <td>{{ category.CategoryName }}</td>
+                                <td>{{ category.Description }}</td>
+                            </tr>
+                    </table>
+                </div>
+                <div id="find">
+                    
+                    <form name="frmSearchCategory" data-ng-submit="search(categoryId)">
+                    <p>Enter Category Id: <input type="text" id="txtEmpid" style="width:50PX" data-ng-model="categoryId"/></p>
+                    <input type="submit" value="Get Category" />
+                    </form>
+                    <br />
+                    <table data-ng-show="category" class='ui-state-highlight'>
+                        <tr>
+                            <th>Id</th>
+                            <th>Category Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>{{category.CategoryID}}</td>
+                            <td>{{category.CategoryName}}</td>
+                            <td> {{category.Description}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="add">
+                    <form name="frmAddCategory" data-ng-submit="addCat(addCategory)">
+                        <table>
+                            <tr>
+                                <td>Category Name:</td>
+                                <td><input type='text' id='txteditCategoryName' ng-model="addCategory.CategoryName" /></td>
+                            </tr>
+                            <tr>
+                                <td>Description:</td>
+                                <td><input type='text' id='txteditDescription' ng-model="addCategory.Description" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan='2'><input type="submit" value="Add Category" /></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div id="edit">
+                    <p>Edit data</p>
+                    <form name="frmSearchCategory" data-ng-submit="getEditCategory(editCategoryId)">
+                        <p>Enter Category Id: <input type="text" id="txtEmpid" style="width:50PX" data-ng-model="editCategoryId"/></p>
+                        <input type="submit" value="Get Category" />
+                    </form>
+                    <br/>
+                    <form name="frmEditCategory" data-ng-show="editCategory" data-ng-submit="edit(editCategory)">
+                        <table class='ui-state-highlight'>
+                            <tr>
+                                <td>Id:</td>
+                                <td><div id='texteditId' data-ng-model="editedCategory.CategoryID">{{editCategory.CategoryID}}</div></td>
+                            </tr>
+                            <tr>
+                                <td>Category Name:</td>
+                                <td><input type='text' id='txteditCategoryName' value='{{editCategory.CategoryName}}' data-ng-model="editCategory.CategoryName" /></td>
+                            </tr>
+                            <tr>
+                                <td>Description:</td>
+                                <td><input type='text' id='txteditDescription' value='{{editCategory.Description}}' data-ng-model="editCategory.Description" />
+                                    <input type='hidden' value='editCategory.Picture' data-ng-model="editCategory.Picture" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan='2'><input type="submit" value="Edit Category" /></td>
+                            </tr>
+                        </table>
+                    </form>
+                    
+                </div>
+                <div id="delete">
+                    <p>Delete Category</p>
+                    <form name="frmdeleteCategory" data-ng-submit="delete(deleteId)">
+                        <p>Enter Category Id: <input type="text" id="txtEmpid" style="width:50PX" data-ng-model="deleteId" /></p>
+                        <input type="submit" value="Delete Category" />
+                    </form>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
