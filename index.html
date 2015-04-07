@@ -15,7 +15,7 @@
 </head>
 <body data-ng-controller="MainController">
     <div id="login">
-        <form id="login_form" data-ng-submit="login(user)" data-ng-hide="token">
+        <form class="login_form" data-ng-submit="login(user)" data-ng-hide="years">
             <div class="field_container">
                 <input type="text" placeholder="Email Address" data-ng-model="user.email">
             </div>
@@ -31,40 +31,80 @@
                 </div>
             </div>
         </form>
-            <form id="login_form" data-ng-submit="getReport(report)" data-ng-show="token">
+            <form class="login_form" data-ng-submit="getReport(report)" data-ng-show="years">
                 <div class="field_container">
                     <div class="grayBig">Search Report</div><br/>
-                    <div class="grayLabel">Month</div>
-                    <select class="button_text" style="color:#2b2828;" data-ng-model="report.month">
-                        <option data-ng-repeat="category in token" value="{{category.CategoryName}}">{{category.CategoryName}}</option>
-                    </select>
-                </div>
-                <div class="field_container">
                     <div class="grayLabel">Year</div>
                     <select class="button_text" style="color:#2b2828;" data-ng-model="report.year">
-                        <option data-ng-repeat="category in token" value="{{category.Description}}">{{category.Description}}</option>
+                        <option data-ng-repeat="year in years" value="{{year.id}}">{{year.year}}</option>
+                    </select>
+                    
+                    
+                </div>
+                <div class="field_container">
+                    <div class="grayLabel">Month</div>
+                    <select class="button_text" style="color:#2b2828;" data-ng-model="report.month">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
                     </select>
                     <button id="sign_in_button">
                         <span class="button_text">Get Report</span>
                     </button>
                 </div>
-            </form>
-        <table data-ng-show="result">
-            <tr>
-                <td>status</td><td>open</td><td>100</td>
+            </form><br>
+        <div data-ng-show="result" class="login_form" style="vertical-align:top;">
+        <table cellspacing='0'>
+            <tr class="even">
+                <th>Status</th>
+                <th></th>
             </tr>
-            <tr>
-                <td>status</td>
-                <td>open</td>
-                <td>100</td>
-            </tr>
-            <tr>
-                <td>status</td>
-                <td>open</td>
-                <td>100</td>
+            <tr data-ng-repeat="item in status">
+                <td>{{item.Status}}</td>
+                <td>{{item.count}}</td>
             </tr>
         </table>
-        
+        <table cellspacing='0'>
+            <tr>
+                <th>Gender</th>
+                <th></th>
+            </tr>
+            <tr data-ng-repeat="item in genders">
+                <td>{{item.Type}}</td>
+                <td>{{item.count}}</td>
+            </tr>
+        </table>
+        <table cellspacing='0'>
+            <tr class="even">
+                <th>Programs</th>
+                <th></th>
+            </tr>
+            <tr data-ng-repeat="item in programs">
+                <td>{{item.Type}}</td>
+                <td>{{item.count}}</td>
+            </tr>
+        </table>
+        <table cellspacing='0'>
+            <tr class="even">
+                <th>Ages</th>
+                <th></th>
+            </tr>
+            <tr data-ng-repeat="item in ages">
+                <td>{{item.Range}}</td>
+                <td>{{item.count}}</td>
+            </tr>
+        </table>
+            </div>
+
     </div>
 </body>
 </html>
