@@ -11,6 +11,7 @@
         var onNoError = function (reason) {
         };
 
+        var baseurl= "http://a3.code8080.com/api"
         var ages = null;
         var status = null;
         var gender = null;
@@ -18,13 +19,13 @@
         // function for login
         var onLoginComplete = function (response) {
             $scope.years = response.data;
-            $http.get("http://a2.3rmao.me/api/ages/")
+            $http.get(baseurl+"/ages")
                .then(onYearsComplete, onNoError);
-            $http.get("http://a2.3rmao.me/api/programs/")
+            $http.get(baseurl+"/programs/")
                .then(onProgramsComplete, onNoError);
-            $http.get("http://a2.3rmao.me/api/genders/")
+            $http.get(baseurl+"/genders/")
                .then(onGendersComplete, onNoError);
-            $http.get("http://a2.3rmao.me/api/status/")
+            $http.get(baseurl+"/statusoffiles/")
                .then(onStatusComplete, onNoError);
         };
 
@@ -61,9 +62,13 @@
         }
 
         $scope.login = function (user) {
-            $http.get("http://a2.3rmao.me/api/report/getyearlist/")
-                .then(onLoginComplete, onError);
-        };
+            if( user.password == "P@$$w0rd" && user.email != null ){
+                $http.get(baseurl+"/fiscalyears")
+                    .then(onLoginComplete, onError);
+            }else{
+                alert("please enter correct email and password");
+            }
+        }
 
         
 
@@ -82,22 +87,22 @@
                 } else {
                     result.forEach(function (client) {
                         status.forEach(function (item) {
-                            if (item.Status == client.status) {
+                            if (item.value == client.status) {
                                 item.count++;
                             }
                         })
                         program.forEach(function (item) {
-                            if (item.Type == client.program) {
+                            if (item.value == client.program) {
                                 item.count++;
                             }
                         })
                         gender.forEach(function (item) {
-                            if (item.Type == client.gender) {
+                            if (item.value == client.gender) {
                                 item.count++;
                             }
                         })
                         ages.forEach(function (item) {
-                            if (item.Range == client.age) {
+                            if (item.value == client.age) {
                                 item.count++;
                             }
                         })
@@ -116,7 +121,7 @@
                 alert("all fields are required");
             } else {
                 $something = report
-                $http.get("http://a2.3rmao.me/api/report/getreport/"+report.month+"/"+report.year)
+                $http.get(baseurl+"/report/getreport/"+report.month+"/"+report.year)
                     .then(onGetReportComplete, onReportError);
             }
         }
